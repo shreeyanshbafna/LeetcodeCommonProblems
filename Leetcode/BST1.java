@@ -69,7 +69,18 @@ class Bst {
 		;
 		return root;
 	}
-
+	int findMin(Node root) {
+	    if (root == null) return -1;
+	    while (root.left != null)
+	        root = root.left;
+	    return root.data;
+	}
+	int findMax(Node root) {
+	    if (root == null) return -1;
+	    while (root.right != null)
+	        root = root.right;
+	    return root.data;
+	}
 	boolean search(Node root, int data) {
 		if (root == null)
 			return false;
@@ -132,7 +143,37 @@ class Bst {
     void print() {
         printTree(root, "", true);
     }
+    boolean isValid(Node root) {
+        return isValid(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
 
+    boolean isValid(Node root, int min, int max) {
+    	if(root ==null)
+    		return false;
+    	if(root.data <=min || root.data >=max) 
+    		return false;
+
+    	return isValid(root.left, min, root.data)
+    	        && isValid(root.right, root.data, max);    	
+    }
+    public boolean isBalanced(Node root) {
+        return heighttree(root ) != -1;
+      }
+      public int heighttree(Node  root){
+          if(root == null)
+              return 0;
+          int left = height(root.left);
+          if(left ==-1)
+              return -1;
+          
+          int right = height(root.right);
+          if(right ==-1)
+              return -1;
+
+          if(Math.abs(left-right)> 1)
+              return -1;
+          return 1+ Math.max(left,right);
+      }
 }
 
 public class BST1 {
